@@ -44,11 +44,11 @@ TagManager:
   - name: Background
     uniqueID: 2839947463
     locked: 0
-  - name: Interactable
-    uniqueID: 604211875
-    locked: 0
   - name: Player
     uniqueID: 141962795
+    locked: 0
+  - name: Interactable
+    uniqueID: 604211875
     locked: 0
   - name: Canvas
     uniqueID: 1094402393
