@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Player : MonoBehaviour
     public float jumpSpeed;
 
     private bool canJump = false;
+
+    [HideInInspector]public bool isDead;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,8 +30,21 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FlipSprite();
-        isGrounded = myFeetCollider.IsTouchingLayers(groundLayer);
+        if(!isDead)
+        {
+            isGrounded = myFeetCollider.IsTouchingLayers(groundLayer);
+            FlipSprite();
+        }
+        else
+        {
+            anim.SetTrigger("dead");
+            Invoke(nameof(RestartGame), 1f);
+        }
+    }
+
+    void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     void OnMove(InputValue value)
@@ -51,14 +67,17 @@ public class Player : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        Walk();
-
-        if(canJump)
+    { 
+        if(!isDead)
         {
-            rb.velocity = Vector2.up * jumpSpeed * Time.fixedDeltaTime;
-            canJump = false;
+            Walk();
+            if(canJump)
+            {
+                rb.velocity = Vector2.up * jumpSpeed * Time.fixedDeltaTime;
+                canJump = false;
+            }
         }
+
     }
 
     void FlipSprite()
