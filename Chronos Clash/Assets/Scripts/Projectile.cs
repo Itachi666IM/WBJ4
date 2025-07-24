@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     Rigidbody2D rb;
     public Vector3 offset;
     [SerializeField] float scale = 1f;
+    public string myColor;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,5 +26,17 @@ public class Projectile : MonoBehaviour
             transform.localScale = new Vector3(-scale, scale, scale);
         }
         Destroy(gameObject, 1.5f);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Enemy")
+        {
+            if(collision.GetComponent<Enemy>().myColor == myColor)
+            {
+                Destroy(gameObject);
+                Destroy(collision.gameObject);
+            }
+        }
     }
 }
