@@ -190,3 +190,4 @@ MonoBehaviour:
   speed: 200
   offset: {x: 0.25, y: 0.53, z: 0}
   scale: 0.5
+  myColor: Yellow
