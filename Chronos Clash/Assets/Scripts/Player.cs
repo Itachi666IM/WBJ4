@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -20,11 +21,22 @@ public class Player : MonoBehaviour
     private bool canJump = false;
 
     [HideInInspector]public bool isDead;
+
+    public float attackTime;
+    bool canAttack;
+
+    public Image weaponImage;
+    public Sprite[] weaponSprites;
+    public GameObject[] weapons;
+    GameObject currentWeapon;
+    int index = 0;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        weaponImage.sprite = weaponSprites[index];
+        currentWeapon = weapons[index];
     }
 
     // Update is called once per frame
@@ -104,5 +116,50 @@ public class Player : MonoBehaviour
         {
             canJump = false;
         }
+    }
+
+    void OnFire(InputValue value)
+    {
+        if(value.isPressed && !canAttack)
+        {
+            canAttack = true;
+            StartCoroutine(AttackWithTime());
+        }
+    }
+
+    IEnumerator AttackWithTime()
+    {
+        if(canAttack)
+        {
+            anim.SetTrigger("attack");
+            yield return new WaitForSeconds(attackTime);
+            canAttack = false;
+        }
+        else
+        {
+            yield return null;
+        }
+    }
+
+    void OnSwitch(InputValue value)
+    {
+        if(value.isPressed)
+        {
+            if(index +1 == weaponSprites.Length)
+            {
+                index = 0;
+            }
+            else
+            {
+                index++;
+            }
+            weaponImage.sprite = weaponSprites[index];
+            currentWeapon = weapons[index];
+        }
+    }
+
+    public void ShootProjectile()
+    {
+        Instantiate(currentWeapon,transform.position + currentWeapon.GetComponent<Projectile>().offset, Quaternion.identity);
     }
 }
