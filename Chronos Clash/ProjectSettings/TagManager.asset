@@ -16,7 +16,7 @@ TagManager:
   - Player
   - Ground
   - Interactable
-  - 
+  - Boss
   - 
   - 
   - 
@@ -47,6 +47,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 141962795
+    locked: 0
+  - name: Boss
+    uniqueID: 1868470145
     locked: 0
   - name: Interactable
     uniqueID: 604211875
