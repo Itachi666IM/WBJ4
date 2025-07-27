@@ -17,7 +17,7 @@ TagManager:
   - Ground
   - Interactable
   - Boss
-  - 
+  - Foreground
   - 
   - 
   - 
@@ -53,6 +53,9 @@ TagManager:
     locked: 0
   - name: Interactable
     uniqueID: 604211875
+    locked: 0
+  - name: Foreground
+    uniqueID: 4095586437
     locked: 0
   - name: Canvas
     uniqueID: 1094402393

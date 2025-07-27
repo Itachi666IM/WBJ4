@@ -5,7 +5,6 @@ using UnityEngine;
 public class Boss_Walk : StateMachineBehaviour
 {
     Rigidbody2D rb;
-    Transform player;
     Transform targetPos;
     Boss boss;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -13,7 +12,6 @@ public class Boss_Walk : StateMachineBehaviour
     {
         boss = animator.GetComponent<Boss>();
         rb = animator.GetComponent<Rigidbody2D>();
-        player = FindObjectOfType<Player>().transform;
         targetPos = boss.NewTargetPos();
     }
 

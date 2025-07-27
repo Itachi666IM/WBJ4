@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 {
     private Vector2 moveDirection;
     private Rigidbody2D rb;
-    private Animator anim;
+    [HideInInspector]public Animator anim;
     private AudioSource myAudio;
     SFX sfx;
 
@@ -71,7 +71,16 @@ public class Player : MonoBehaviour
 
     void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1f;
+        if(SceneManager.GetActiveScene().name == "Game")
+        {
+            GameManager gameManager = FindObjectOfType<GameManager>();
+            gameManager.SpawnPlayerAtCheckPoint();
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     void OnMove(InputValue value)

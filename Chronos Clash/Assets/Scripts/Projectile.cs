@@ -32,11 +32,32 @@ public class Projectile : MonoBehaviour
     {
         if(collision.tag == "Enemy")
         {
-            if(collision.GetComponent<Enemy>().myColor == myColor)
+            if(collision.GetComponent<Enemy>() != null)
             {
-                Destroy(gameObject);
-                Destroy(collision.gameObject);
+                if (collision.GetComponent<Enemy>().myColor == myColor)
+                {
+                    Destroy(gameObject);
+                    Destroy(collision.gameObject);
+                }
+
             }
+            else
+            {
+                if(collision.GetComponent<BossProjectile>() != null)
+                {
+                    if(collision.GetComponent<BossProjectile>().projectileColour == myColor)
+                    {
+                        Boss boss = FindObjectOfType<Boss>();
+                        if (boss != null)
+                        {
+                            boss.TakeDamage(10);
+                        }
+                        Destroy(gameObject);
+                        Destroy(collision.gameObject);
+                    }
+                }
+            }
+
         }
     }
 }
