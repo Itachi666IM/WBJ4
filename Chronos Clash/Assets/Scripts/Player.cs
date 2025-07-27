@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     private Vector2 moveDirection;
     private Rigidbody2D rb;
     private Animator anim;
+    private AudioSource myAudio;
+    SFX sfx;
 
     public float speed;
     [HideInInspector]public bool isFacingRight = true;
@@ -30,11 +32,19 @@ public class Player : MonoBehaviour
     public GameObject[] weapons;
     GameObject currentWeapon;
     int index = 0;
+
+    public AudioClip jumpSound;
+    public AudioClip attackSound;
+    public AudioClip weaponSound;
+    public AudioClip deathSound;
+    bool once;
     // Start is called before the first frame update
     void Start()
     {
+        myAudio = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        sfx = FindObjectOfType<SFX>();
         weaponImage.sprite = weaponSprites[index];
         currentWeapon = weapons[index];
     }
@@ -49,6 +59,11 @@ public class Player : MonoBehaviour
         }
         else
         {
+            if(!once)
+            {
+                once = true;
+                sfx.PlayAnySound(deathSound);
+            }
             anim.SetTrigger("dead");
             Invoke(nameof(RestartGame), 1f);
         }
@@ -70,10 +85,12 @@ public class Player : MonoBehaviour
         if(Mathf.Abs(playerVelocity.x) > 0)
         {
             anim.SetBool("isWalking", true);
+            myAudio.enabled = true;
         }
         else
         {
             anim.SetBool("isWalking", false);
+            myAudio.enabled = false;
         }
         rb.velocity = playerVelocity;
     }
@@ -85,6 +102,7 @@ public class Player : MonoBehaviour
             Walk();
             if(canJump)
             {
+                sfx.PlayAnySound(jumpSound);
                 rb.velocity = Vector2.up * jumpSpeed * Time.fixedDeltaTime;
                 canJump = false;
             }
@@ -145,6 +163,7 @@ public class Player : MonoBehaviour
     {
         if(value.isPressed)
         {
+            sfx.PlayAnySound(weaponSound);
             if(index +1 == weaponSprites.Length)
             {
                 index = 0;
@@ -160,6 +179,7 @@ public class Player : MonoBehaviour
 
     public void ShootProjectile()
     {
+        sfx.PlayAnySound(attackSound);
         Instantiate(currentWeapon,transform.position + currentWeapon.GetComponent<Projectile>().offset, Quaternion.identity);
     }
 }
