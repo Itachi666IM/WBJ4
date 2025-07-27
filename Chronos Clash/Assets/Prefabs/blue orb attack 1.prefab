@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3845131209566861620}
   - component: {fileID: 8567040922951903533}
   m_Layer: 9
-  m_Name: blue orb attack
+  m_Name: blue orb attack 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,6 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3217a1f0fe65d3e4fa96cf747dfe1862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 3
   player: {fileID: 0}
   projectileColour: Blue
