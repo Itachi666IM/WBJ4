@@ -31,4 +31,11 @@ public class Enemy : MonoBehaviour
         myRigidbody.velocity = Vector2.left * speed * Time.fixedDeltaTime;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Player")
+        {
+            collision.GetComponent<Player>().isDead = true;
+        }
+    }
 }
