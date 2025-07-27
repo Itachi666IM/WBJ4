@@ -10,10 +10,12 @@ public class BossFightManager : MonoBehaviour
     SFX sfx;
     public AudioClip winSound;
     bool once;
+    Player player;
     private void Start()
     {
         boss = FindObjectOfType<Boss>();
         sfx = FindObjectOfType<SFX>();
+        player = FindObjectOfType<Player>();
     }
 
     private void Update()
@@ -25,6 +27,7 @@ public class BossFightManager : MonoBehaviour
             if(!once)
             {
                 sfx.PlayAnySound(winSound);
+                player.gameObject.SetActive(false);
                 once = true;
             }
         }

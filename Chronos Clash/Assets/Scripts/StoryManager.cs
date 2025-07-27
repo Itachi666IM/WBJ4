@@ -29,12 +29,12 @@ public class StoryManager : MonoBehaviour
 
     IEnumerator WriteSentence()
     {
-        sfx.PlayAnySound(typingSound);
         foreach(char c in currentDialogue.ToCharArray())
         {
             dialogueText.text += c;
             yield return new WaitForSeconds(typingSpeed);
         }
+        sfx.PlayAnySound(typingSound);
         yield return new WaitForSeconds(typingSpeed);
         continueButton.SetActive(true);
     }
